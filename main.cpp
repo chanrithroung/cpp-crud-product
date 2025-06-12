@@ -50,20 +50,6 @@ class Product {
 };
 
 
-void inputAlL(Product products[], const int n) {
-    for(int i = 0; i < n; i++) {
-        cout << "========[ Product " << (i+1) << "]=========" << endl;
-        products[i].input();
-    }
-}
-
-void outputAllProduct(Product products[], const int n) {
-    cout << "All product in array!" << endl;
-    for(int i = 0; i < n; i++) {
-        products[i].output();
-    }
-}
-
 void line(char symbol, int n) {
     while (n--) cout << symbol;
     cout << endl;
@@ -76,6 +62,7 @@ bool isValidChoice(int chioce) {
 
 
 int menu() {
+    system("clear");
     cout << R"(
     ____            _            _         __  __                                    
     |  _ \ ___  __ _| |_ ___  ___| |_ ___  |  \/  | __ _ _ __   __ _  __ _  ___ _ __ 
@@ -98,15 +85,53 @@ int menu() {
     do
     {
         cout << "Please select one option : "; cin >> choice;
+        if (!isValidChoice(choice)) cout << "Invalid choice!" << endl;
     } while (!isValidChoice(choice));
     return choice;
 }
 
 
+
+
+void inputAlL(Product products[], const int n) {
+    for(int i = 0; i < n; i++) {
+        cout << "========[ Product " << (i+1) << "]=========" << endl;
+        products[i].input();
+    }
+}
+
+void outputAllProduct(Product products[], const int n) {
+    cout << "All product in array!" << endl;
+    for(int i = 0; i < n; i++) {
+        products[i].output();
+    }
+}
+
+
+void controllers(Product productList[],int &n, int choice) {
+    switch (choice)
+    {
+        case 1: {
+            cout << "How many product do you want to create : "; 
+            cin >> n;
+        } break;
+        default:
+            break;
+    }
+}
+
+
 void process() {
-    Product products[50];
+    Product productList[50];
     int choice;
-    choice = menu();
+    int n;
+    do
+    {
+        choice = menu();
+        controllers(productList, n, choice);
+    } while (choice <= 7);
+
+    
 }
 
 int main() {
