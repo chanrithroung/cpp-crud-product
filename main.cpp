@@ -35,6 +35,35 @@ class Product {
             payment        = findPayment();
         }
 
+
+
+        void setCode(int code) {
+            this->code = code;
+        }
+
+        void setName(string name) {
+            this->name = name;
+        }
+
+        void setPrice(float price) {
+            this->price = price;
+            total = findTotal();
+            discount = findDiscount();
+            payment = findPayment();
+        }
+
+        void setQuantity(int quantity) {
+            this->quantity = quantity;
+            total = findTotal();
+            discount = findDiscount();
+            payment = findPayment();
+        }
+
+
+        int getCode() {
+            return code;
+        }
+        // method
         void input() {
             cout << "Enter product code  : "; cin >> code;
             cout << "Enter product name  : "; cin >> name;
@@ -100,12 +129,27 @@ void inputAlL(Product products[], const int n) {
     }
 }
 
+void header() {
+    cout << left << setw(15) << "Name" << setw(20) << "Price" << setw(10) << "Quantity" << setw(10) << "Total" << setw(10) << "Discount" << setw(10) << "Payment" << endl;
+}
+
 void outputAllProduct(Product products[], const int n) {
-    cout << "All product in array!" << endl;
+    header();
     for(int i = 0; i < n; i++) {
         products[i].output();
     }
 }
+
+
+int search(Product productList[],const int n,const int code) {
+    for(int i = 0; i < n; i++) {
+        if (productList[i].getCode() == code) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 
 
 void controllers(Product productList[],int &n, int choice) {
@@ -114,9 +158,27 @@ void controllers(Product productList[],int &n, int choice) {
         case 1: {
             cout << "How many product do you want to create : "; 
             cin >> n;
+            inputAlL(productList, n);
         } break;
+
+        case 2: {
+            outputAllProduct(productList, n);
+        } break;
+
+        case 3: {
+            cout << "Enter product code you want ot search : ";
+            int code;
+            cin >> code;
+            int index = search(productList, n, code);
+            if(index != -1) {
+                header();
+                productList[index].output();
+            } else {
+                cout << "not found!" << endl;
+            }
+        }
         default:
-            break;
+        break;
     }
 }
 
@@ -129,8 +191,10 @@ void process() {
     {
         choice = menu();
         controllers(productList, n, choice);
+        cout << "press any key to continue : ";
+        cin.ignore();
+        getchar();
     } while (choice <= 7);
-
     
 }
 
@@ -138,4 +202,4 @@ int main() {
     process();
     
     return 0;
-}
+}   
