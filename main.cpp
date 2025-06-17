@@ -120,6 +120,10 @@ int menu() {
 }
 
 
+void header() {
+    cout << left << setw(15) << "Name" << setw(20) << "Price" << setw(10) << "Quantity" << setw(10) << "Total" << setw(10) << "Discount" << setw(10) << "Payment" << endl;
+}
+
 
 
 void inputAlL(Product products[], const int n) {
@@ -129,17 +133,12 @@ void inputAlL(Product products[], const int n) {
     }
 }
 
-void header() {
-    cout << left << setw(15) << "Name" << setw(20) << "Price" << setw(10) << "Quantity" << setw(10) << "Total" << setw(10) << "Discount" << setw(10) << "Payment" << endl;
-}
-
 void outputAllProduct(Product products[], const int n) {
     header();
     for(int i = 0; i < n; i++) {
         products[i].output();
     }
 }
-
 
 int search(Product productList[],const int n,const int code) {
     for(int i = 0; i < n; i++) {
@@ -150,6 +149,17 @@ int search(Product productList[],const int n,const int code) {
     return -1;
 }
 
+void updateProduct(Product productList[], const int n) {
+    int code;
+    cout << "Enter product code you want to update : "; cin >> code;
+    int index = search(productList, n, code);
+    if (index == -1) {
+        cout << "Not found" << endl;
+    } else {
+        cout << "you're updating product " << (index + 1) << endl;
+        productList[index].input();
+    }
+}
 
 
 void controllers(Product productList[],int &n, int choice) {
@@ -176,7 +186,10 @@ void controllers(Product productList[],int &n, int choice) {
             } else {
                 cout << "not found!" << endl;
             }
-        }
+        } break;
+        case 4: {
+            updateProduct(productList, n);
+        } break;
         default:
         break;
     }
