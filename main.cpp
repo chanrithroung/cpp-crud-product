@@ -63,6 +63,10 @@ class Product {
         int getCode() {
             return code;
         }
+
+        float getPayment() {
+            return payment;
+        }
         // method
         void input() {
             cout << "Enter product code  : "; cin >> code;
@@ -179,6 +183,29 @@ void deleteProduct(Product productList[], int &n) {
     }
 }
 
+
+bool compare(char command, float i, float j) {
+    if (command == 'a') return i > j;
+    else return i < j;
+}
+
+void sort(Product productList[], int n) {
+    char sortMethod;
+    cin.ignore();
+    cout << "Choose one method for sort : a/d : "; cin >> sortMethod;
+    for(int i = 0 ; i < n - 1; i++) {
+        for(int j = i + 1; j < n; j++) {
+            if(compare(sortMethod, productList[i].getPayment(), productList[j].getPayment())) {
+                Product t;
+                t = productList[i];
+                productList[i] = productList[j];
+                productList[j] = t;
+            }
+        }
+    }
+    cout << "Sort successed" << endl;
+}
+
 void controllers(Product productList[],int &n, int choice) {
     switch (choice)
     {
@@ -210,6 +237,9 @@ void controllers(Product productList[],int &n, int choice) {
 
         case 5: {
             deleteProduct(productList, n);
+        } break;
+        case 6: {
+            sort(productList, n);
         } break;
         default:
         break;
