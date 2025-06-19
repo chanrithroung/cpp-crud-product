@@ -162,6 +162,23 @@ void updateProduct(Product productList[], const int n) {
 }
 
 
+void deleteProduct(Product productList[], int &n) {
+    int searchCode;
+    cout << "Enter product code you want to delete : "; cin >> searchCode;
+    int index = search(productList, n, searchCode);
+
+    if (index != -1) {
+        for(int i = index; i < n - 1; i++) {
+            productList[i] = productList[i + 1];
+        }
+        n--;
+        cout << "product deleted success!" << endl;
+    } else {
+        cout << "Product code " << searchCode << " not found!" << endl;
+    
+    }
+}
+
 void controllers(Product productList[],int &n, int choice) {
     switch (choice)
     {
@@ -189,6 +206,10 @@ void controllers(Product productList[],int &n, int choice) {
         } break;
         case 4: {
             updateProduct(productList, n);
+        } break;
+
+        case 5: {
+            deleteProduct(productList, n);
         } break;
         default:
         break;
