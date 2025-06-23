@@ -206,6 +206,62 @@ void sort(Product productList[], int n) {
     cout << "Sort successed" << endl;
 }
 
+float getTotalPayment(Product productList[], const int n) {
+    float totalPayment = 0;
+    for(int i = 0; i < n; i++) {
+        totalPayment += productList[i].getPayment();
+    }
+    return totalPayment;
+}
+
+float toRiel(float dollar) {
+    float exchangeRate = 4090;
+    return dollar * exchangeRate;
+}
+
+// Checkout 
+void checkoutProducts(Product productList[], const int n) {
+    float totalPayment = getTotalPayment(productList, n);
+    float balance, paymentInRiel;
+    char paymentMethod;
+    paymentInRiel = toRiel(totalPayment);
+    cout << "Total Playment :" << endl;
+    cout << "Dollar = " << totalPayment << "$" << endl;
+    cout << "Riel   = " << paymentInRiel << "៛" << endl;
+    cout << "Please choose payment method " << endl;
+    cout << "Press [d/D] for dollar and [r/R] for Riel : "; cin >> paymentMethod;
+
+    switch (paymentMethod)
+    {
+       
+        case 'd':
+        case 'D': {
+            float balanceInDollar;
+            float remian;
+            do
+            {
+                cout << "Enter your balance in dollar : ";  cin >> balanceInDollar;
+                if (balanceInDollar >= totalPayment) {
+                    remian = balanceInDollar - totalPayment;
+                    if (remian > 0) {
+                        cout << "Your remain is " << remian << endl;
+                    }
+                    cout << "Checkout completed! Thanks for your Purchase." << endl;
+                } else {
+                    cout << "Your balnace is not enough!" << endl; 
+                }
+            } while (balanceInDollar < totalPayment);
+        } break;
+
+        default:
+            break;
+    }
+
+}
+
+
+
+
 void controllers(Product productList[],int &n, int choice) {
     switch (choice)
     {
@@ -241,10 +297,14 @@ void controllers(Product productList[],int &n, int choice) {
         case 6: {
             sort(productList, n);
         } break;
+        case 7: {
+            checkoutProducts(productList, n);
+        } break;
         default:
         break;
     }
 }
+
 
 
 void process() {
